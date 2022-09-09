@@ -17,6 +17,7 @@ export const NavContainer = styled.div<{isActive: boolean}>`
     @media (min-width: 801px) {
         height: calc(100vh - 16px);
         width: auto;
+        border-radius: 16px;
     }
 `;
 
