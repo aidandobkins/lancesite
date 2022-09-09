@@ -1,8 +1,8 @@
 import React from 'react';
-import Home from './pages/Home';
+import Switcher from './Switcher';
 
 const App = () => {
-    return <Home />;
+    return <Switcher />;
 };
 
 export default App;

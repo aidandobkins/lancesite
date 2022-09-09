@@ -15,9 +15,11 @@ export const NavContainer = styled.div<{isActive: boolean}>`
 
     //desktop view
     @media (min-width: 801px) {
-        height: calc(100vh - 16px);
+        height: calc(100vh - 32px);
         width: auto;
-        border-radius: 16px;
+        border-radius: 32px;
+        margin-top: 8px;
+        margin-left: 8px;
     }
 `;
 
