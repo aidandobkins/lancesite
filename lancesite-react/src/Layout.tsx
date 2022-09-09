@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Outlet} from 'react-router-dom';
-import {PageContainer, NavToggle, TopBar} from './styles/Layout';
+import {PageContainer, NavToggle, TopBar, ContentContainer} from './styles/Layout';
 import NavBar from './components/NavBar';
 import {HiOutlineMenu} from 'react-icons/hi';
 
@@ -16,7 +16,9 @@ const Layout: React.FC = () => {
             </TopBar>
             <PageContainer>
                 <NavBar isActive={isActive} />
-                <Outlet />
+                <ContentContainer>
+                    <Outlet />
+                </ContentContainer>
             </PageContainer>
         </>
     );

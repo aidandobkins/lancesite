@@ -7,6 +7,14 @@ export const PageContainer = styled.div`
     justify-content: center;
 `;
 
+export const ContentContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-content: flex-start;
+    margin: 16px auto;
+`;
+
 export const NavToggle = styled.button`
     border: none;
     background: none;
