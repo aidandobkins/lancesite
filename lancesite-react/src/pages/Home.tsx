@@ -1,13 +1,12 @@
 import React from 'react';
-import {Title} from './styles/Home';
-import {CardContainer, ContentText} from '../components/styles/ContentCard';
+import {CardContainer, ContentText, Title} from '../components/styles/ContentCard';
 
 const Home = () => {
     return (
         <>
             <Title>Welcome to the Lance Website</Title>
             <CardContainer>
-                <ContentText>This is a card with something cool on it</ContentText>
+                <ContentText>This is a WIP</ContentText>
             </CardContainer>
         </>
     );
