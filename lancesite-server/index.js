@@ -49,8 +49,9 @@ app.get('/api/getLancePhoto', (req, res) => {
 
 app.get('/api/getBirthdays', (req, res) => {
     const fs = require('fs');
+    const path = require('path');
 
-    let birthdaysJson = fs.readFileSync('./info/birthdays.json');
+    let birthdaysJson = fs.readFileSync(path.resolve('./info/birthdays.json'));
     const birthdays = JSON.parse(birthdaysJson).birthdays;
     let currTime = new Date(); //current time
     currTime.setHours(0, 0, 0, 0);
