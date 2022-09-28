@@ -20,7 +20,7 @@ app.get('/api/getLancePhoto', (req, res) => {
         currLance = currLance.split(' ');
         //if todays lance has already been found
         if (String(today.getMonth()) + '/' + String(today.getDate()) === currLance[0]) {
-            res.status(200).sendFile(path.resolve(currLance[1]));
+            res.status(200).sendFile(path.resolve(currLance[1].trim()));
         } else {
             //if not
             files = fs.readdirSync(path.resolve('../info/images'));
