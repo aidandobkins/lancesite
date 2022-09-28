@@ -13,9 +13,6 @@ const Home = () => {
             <CardContainer>
                 <Lance />
             </CardContainer>
-            <CardContainer>
-                <Birthdays />
-            </CardContainer>
         </>
     );
 };
