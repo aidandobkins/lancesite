@@ -47,5 +47,8 @@
     "devDependencies": {
         "@types/jest": "^28.1.8",
         "@types/styled-components": "^5.1.26"
-    }
+    },
+{
+  test: react-scripts test --transformIgnorePatterns \"node_modules/(?!ui-core)/\" --env=jsdom
+}
 }
