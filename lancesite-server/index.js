@@ -27,7 +27,7 @@ app.get('/api/getLancePhoto', (req, res) => {
             let imagesAmount = files.length;
 
             const rand = (Math.floor(Math.random() * imagesAmount) + 1).toString();
-            let lance = './info/images/lance' + rand + '.png';
+            let lance = '../info/images/lance' + rand + '.png';
 
             currLanceData = String(today.getMonth()) + '/' + String(today.getDate()) + ' ' + String(lance);
             fs.writeFileSync(path.resolve('../info/CurrentLance.txt'), currLanceData);
@@ -39,10 +39,10 @@ app.get('/api/getLancePhoto', (req, res) => {
         let imagesAmount = files.length;
 
         const rand = (Math.floor(Math.random() * imagesAmount) + 1).toString();
-        let lance = './info/images/lance' + rand + '.png';
+        let lance = '../info/images/lance' + rand + '.png';
 
         currLanceData = String(today.getMonth()) + '/' + String(today.getDate()) + ' ' + String(lance);
-        fs.writeFileSync('./info/CurrentLance.txt', currLanceData);
+        fs.writeFileSync(path.resolve('../info/CurrentLance.txt'), currLanceData);
         res.status(200).sendFile(path.resolve(lance));
     }
 });
