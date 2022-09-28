@@ -14,7 +14,7 @@ app.get('/api/getLancePhoto', (req, res) => {
 
     //see if its a new day
     today = new Date();
-    currLance = String(fs.readFileSync('./info/CurrentLance.txt'));
+    currLance = String(fs.readFileSync(path.resolve('../info/CurrentLance.txt')));
 
     if (currLance) {
         currLance = currLance.split(' ');
@@ -23,19 +23,19 @@ app.get('/api/getLancePhoto', (req, res) => {
             res.status(200).sendFile(path.resolve(currLance[1]));
         } else {
             //if not
-            files = fs.readdirSync('./info/images');
+            files = fs.readdirSync(path.resolve('../info/images'));
             let imagesAmount = files.length;
 
             const rand = (Math.floor(Math.random() * imagesAmount) + 1).toString();
             let lance = './info/images/lance' + rand + '.png';
 
             currLanceData = String(today.getMonth()) + '/' + String(today.getDate()) + ' ' + String(lance);
-            fs.writeFileSync('./info/CurrentLance.txt', currLanceData);
+            fs.writeFileSync(path.resolve('../info/CurrentLance.txt'), currLanceData);
             res.status(200).sendFile(path.resolve(lance));
         }
     } else {
         //if not
-        files = fs.readdirSync('./info/images');
+        files = fs.readdirSync(path.resolve('../info/images'));
         let imagesAmount = files.length;
 
         const rand = (Math.floor(Math.random() * imagesAmount) + 1).toString();
