@@ -15,7 +15,7 @@ const Layout: React.FC = () => {
                 </NavToggle>
             </TopBar>
             <PageContainer>
-                <NavBar isActive={isActive} />
+                <NavBar isActive={isActive} setIsActive={setIsActive} />
                 <ContentContainer>
                     <Outlet />
                 </ContentContainer>

@@ -6,8 +6,8 @@ export const CardContainer = styled.div`
     justify-content: center;
     border-radius: 8px;
     background-color: #414152;
-    padding: 12px;
-    margin: 32px;
+    padding: 8px;
+    margin: 8px;
 `;
 
 export const ContentText = styled.p`
