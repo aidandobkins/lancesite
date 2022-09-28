@@ -50,53 +50,48 @@ app.get('/api/getLancePhoto', (req, res) => {
 app.get('/api/getBirthdays', (req, res) => {
     const fs = require('fs');
 
-    fs.readFile('./info/birthdays.json', (err, birthdaysJson) => {
-        if (err) {
-            console.log('File read failed:', err);
-            return;
+    let birthdaysJson = fs.readFileSync('./info/birthdays.json');
+    const birthdays = JSON.parse(birthdaysJson).birthdays;
+    let currTime = new Date(); //current time
+    currTime.setHours(0, 0, 0, 0);
+    let minDiff = 365;
+    let birthdayArray = [];
+    for (let i = 0; i < birthdays.length; i++) {
+        //pads date with 0s and converts to date object
+        let currBirthday = new Date(
+            `${currTime.getFullYear()}-${String(birthdays[i].month).padStart(2, '0')}-${String(
+                birthdays[i].day
+            ).padStart(2, '0')}T00:00:00Z`
+        );
+
+        //gets days til the birthday (negative if already passed in the year)
+        let daysDiff = Math.round((currBirthday.getTime() - currTime.getTime()) / 86400000);
+        if (daysDiff < 0) {
+            //if its a leap year and March+ next year
+            if ((currTime.getFullYear() + 1) % 4 === 0 && birthdays[i].month > 2) {
+                daysDiff = 366 + daysDiff;
+            } else {
+                //if not leap year
+                daysDiff = 365 + daysDiff;
+            }
         }
-        const birthdays = JSON.parse(birthdaysJson).birthdays;
-        let currTime = new Date(); //current time
-        currTime.setHours(0, 0, 0, 0);
-        let minDiff = 365;
-        let birthdayArray = [];
-        for (let i = 0; i < birthdays.length; i++) {
-            //pads date with 0s and converts to date object
-            let currBirthday = new Date(
-                `${currTime.getFullYear()}-${String(birthdays[i].month).padStart(2, '0')}-${String(
-                    birthdays[i].day
-                ).padStart(2, '0')}T00:00:00Z`
-            );
 
-            //gets days til the birthday (negative if already passed in the year)
-            let daysDiff = Math.round((currBirthday.getTime() - currTime.getTime()) / 86400000);
-            if (daysDiff < 0) {
-                //if its a leap year and March+ next year
-                if ((currTime.getFullYear() + 1) % 4 === 0 && birthdays[i].month > 2) {
-                    daysDiff = 366 + daysDiff;
-                } else {
-                    //if not leap year
-                    daysDiff = 365 + daysDiff;
-                }
+        //sorts the array by earliest birthday
+        const arrlen = birthdayArray.length;
+        for (let j = 0; j < arrlen; j++) {
+            if (birthdayArray[j].substring(0, birthdayArray[j].indexOf('d')) >= daysDiff) {
+                birthdayArray.splice(j, 0, `${daysDiff} days until ${birthdays[i].name}'s birthday`);
+                break;
             }
-
-            //sorts the array by earliest birthday
-            const arrlen = birthdayArray.length;
-            for (let j = 0; j < arrlen; j++) {
-                if (birthdayArray[j].substring(0, birthdayArray[j].indexOf('d')) >= daysDiff) {
-                    birthdayArray.splice(j, 0, `${daysDiff} days until ${birthdays[i].name}'s birthday`);
-                    break;
-                }
-                if (j === arrlen - 1) {
-                    birthdayArray.push(`${daysDiff} days until ${birthdays[i].name}'s birthday`);
-                }
-            }
-            if (birthdayArray.length === 0) {
+            if (j === arrlen - 1) {
                 birthdayArray.push(`${daysDiff} days until ${birthdays[i].name}'s birthday`);
             }
         }
-        res.status(200).send(birthdayArray);
-    });
+        if (birthdayArray.length === 0) {
+            birthdayArray.push(`${daysDiff} days until ${birthdays[i].name}'s birthday`);
+        }
+    }
+    res.status(200).send(birthdayArray);
 });
 
 app.listen(PORT, () => {
