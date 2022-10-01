@@ -26,9 +26,10 @@ app.get('/api/getLancePhoto', (req, res) => {
 
     //see if its a new day
     today = new Date();
-    currLance = String(fs.readFileSync(path.resolve('../info/CurrentLance.txt')));
+    let currLance = String(fs.readFileSync(path.resolve('../info/CurrentLance.txt')));
+    currLance = currLance.split(' ');
 
-    if (currLance && String(today.getMonth()) + '/' + String(today.getDate()) === currLance.split(' ')[0]) {
+    if (currLance && String(today.getMonth()) + '/' + String(today.getDate()) === currLance[0]) {
         //if todays lance has already been found
         res.status(200).sendFile(path.resolve(currLance[1].trim()));
     } else {
