@@ -1,8 +1,11 @@
 const express = require('express');
-
+require('dotenv').config();
 const PORT = process.env.PORT || 3001;
-
 const app = express();
+const path = require('path');
+
+// Pick up React index.html file
+app.use(express.static(path.join(__dirname, '../lancesite-react/build')));
 
 app.get('/api/helloWorld', (req, res) => {
     res.json({message: 'Hello from server!'});
@@ -93,6 +96,11 @@ app.get('/api/getBirthdays', (req, res) => {
         }
     }
     res.status(200).send(birthdayArray);
+});
+
+//catch all other requests and send back frontend
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../lancesite-react/build/index.html'));
 });
 
 app.listen(PORT, () => {

@@ -12,7 +12,8 @@
 /coverage
 
 # production
-/build
+lancesite-react/build
+lancesite-server/build
 
 # misc
 .DS_Store
