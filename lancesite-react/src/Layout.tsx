@@ -11,7 +11,6 @@ const Layout: React.FC = () => {
     useEffect(() => {
         // Bind menu close event (to close menu on a click outside of it)
         document.addEventListener('mousedown', (ev) => {
-            console.log(ev);
             if (!menuRef) return;
             // @ts-ignore
             if (menuRef.current && menuRef.current.contains(ev.target)) return;

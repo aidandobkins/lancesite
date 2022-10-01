@@ -20,7 +20,6 @@ const NavBar: React.FC<Props> = (props) => {
 
     const onNavClick = (path: String) => {
         setIsActive(false);
-        console.log(path);
         navigate(String(path));
     };
 

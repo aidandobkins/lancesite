@@ -1,10 +1,17 @@
 const express = require('express');
+var bodyParser = require('body-parser');
 require('dotenv').config();
 
 let PORT = process.env.PORT;
 if (process.env.ENVIRONMENT === 'DEV') PORT = 3001;
+const RIOTKEY = process.env.RIOTKEY;
 const app = express();
+var jsonParser = bodyParser.json();
 const path = require('path');
+
+//RIOT API
+const {Kayn, REGIONS} = require('kayn');
+const kayn = Kayn(RIOTKEY)();
 
 // Pick up React index.html file
 app.use(express.static(path.join(__dirname, '../lancesite-react/build')));
@@ -86,46 +93,23 @@ app.get('/api/getBirthdays', (req, res) => {
     res.status(200).send(birthdayArray);
 });
 
-app.get('/api/getLeagueRank', (req, res) => {
-    const fs = require('fs');
-    const path = require('path');
-
-    //gets riot api key from txt file by splitting at newlines
-    let api = fs.readFileSync(path.resolve('./info/api.txt'), 'utf-8').split(/\r?\n/)[4];
-
-    //res.status(200).send(api);
+app.post('/api/getLeagueRank', jsonParser, (req, res) => {
+    kayn.Summoner.by
+        .name(req.body.name)
+        .then((summoner) => {
+            kayn.League.Entries.by
+                .summonerID(summoner.id)
+                .then((ranks) => {
+                    for (let i = 0; i < ranks.length; i++) {
+                        if (ranks[i].queueType === 'RANKED_SOLO_5x5') {
+                            res.status(200).send(ranks[i].tier + ' ' + ranks[i].rank);
+                        }
+                    }
+                })
+                .catch((error) => console.error(error));
+        })
+        .catch((error) => console.error(error));
 });
-
-// #RIOT API STUFF
-// api_key = apidata[4]
-// watcher = LolWatcher(api_key)
-// my_region = 'na1'
-
-// def rankLookUp(name):
-//     me = watcher.summoner.by_name(my_region, name)
-//     my_ranked_stats = watcher.league.by_summoner(my_region, me['id'])
-
-//     tier = ""
-//     division = ""
-//     lp = ""
-
-//     if not my_ranked_stats:
-//         return name + " is not ranked in Solo/Duo Queue."
-
-//     raw1 = my_ranked_stats[0]
-//     if len(my_ranked_stats) > 1:
-//         raw2 = my_ranked_stats[1]
-
-//     if raw1["queueType"] == 'RANKED_SOLO_5x5':
-//         tier = raw1["tier"]
-//         division = raw1["rank"]
-//         lp = raw1["leaguePoints"]
-//     else:
-//         tier = raw2["tier"]
-//         division = raw2["rank"]
-//         lp = raw2["leaguePoints"]
-
-//     return name + " is **" + str(tier) + "** **" + str(division) + "**\n*" + str(lp) + "* *LP*"
 
 if (process.env.ENVIRONMENT !== 'DEV') {
     //catch all other requests and send back frontend
