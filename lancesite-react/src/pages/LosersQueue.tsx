@@ -4,8 +4,10 @@ import {CardContainer, ContentText, ContentSubtitle, Title} from '../components/
 
 const LosersQueue = () => {
     const [rank, setRank] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const getLeagueRank = async (name: string) => {
+        setLoading(true);
         const rankResponse = await fetch('/api/getLeagueRank', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -13,6 +15,7 @@ const LosersQueue = () => {
         });
         const rankString = await rankResponse.text();
 
+        setLoading(false);
         return rankString;
     };
 
@@ -26,7 +29,10 @@ const LosersQueue = () => {
         <>
             <Title>Cameron's Rank</Title>
             <CardContainer>
-                <ContentText>{rank}</ContentText>
+                <>
+                    {loading && <ContentText>Loading...</ContentText>}
+                    {!loading && <ContentSubtitle>{rank}</ContentSubtitle>}
+                </>
             </CardContainer>
         </>
     );
