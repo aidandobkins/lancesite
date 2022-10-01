@@ -1,6 +1,8 @@
 const express = require('express');
 require('dotenv').config();
-const PORT = process.env.PORT || 3001;
+
+let PORT = process.env.PORT;
+if (process.env.ENVIRONMENT === 'DEV') PORT = 3001;
 const app = express();
 const path = require('path');
 
@@ -19,23 +21,9 @@ app.get('/api/getLancePhoto', (req, res) => {
     today = new Date();
     currLance = String(fs.readFileSync(path.resolve('../info/CurrentLance.txt')));
 
-    if (currLance) {
-        currLance = currLance.split(' ');
+    if (currLance && String(today.getMonth()) + '/' + String(today.getDate()) === currLance.split(' ')[0]) {
         //if todays lance has already been found
-        if (String(today.getMonth()) + '/' + String(today.getDate()) === currLance[0]) {
-            res.status(200).sendFile(path.resolve(currLance[1].trim()));
-        } else {
-            //if not
-            files = fs.readdirSync(path.resolve('../info/images'));
-            let imagesAmount = files.length;
-
-            const rand = (Math.floor(Math.random() * imagesAmount) + 1).toString();
-            let lance = '../info/images/lance' + rand + '.png';
-
-            currLanceData = String(today.getMonth()) + '/' + String(today.getDate()) + ' ' + String(lance);
-            fs.writeFileSync(path.resolve('../info/CurrentLance.txt'), currLanceData);
-            res.status(200).sendFile(path.resolve(lance));
-        }
+        res.status(200).sendFile(path.resolve(currLance[1].trim()));
     } else {
         //if not
         files = fs.readdirSync(path.resolve('../info/images'));
@@ -98,10 +86,53 @@ app.get('/api/getBirthdays', (req, res) => {
     res.status(200).send(birthdayArray);
 });
 
-//catch all other requests and send back frontend
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../lancesite-react/build/index.html'));
+app.get('/api/getLeagueRank', (req, res) => {
+    const fs = require('fs');
+    const path = require('path');
+
+    //gets riot api key from txt file by splitting at newlines
+    let api = fs.readFileSync(path.resolve('./info/api.txt'), 'utf-8').split(/\r?\n/)[4];
+
+    //res.status(200).send(api);
 });
+
+// #RIOT API STUFF
+// api_key = apidata[4]
+// watcher = LolWatcher(api_key)
+// my_region = 'na1'
+
+// def rankLookUp(name):
+//     me = watcher.summoner.by_name(my_region, name)
+//     my_ranked_stats = watcher.league.by_summoner(my_region, me['id'])
+
+//     tier = ""
+//     division = ""
+//     lp = ""
+
+//     if not my_ranked_stats:
+//         return name + " is not ranked in Solo/Duo Queue."
+
+//     raw1 = my_ranked_stats[0]
+//     if len(my_ranked_stats) > 1:
+//         raw2 = my_ranked_stats[1]
+
+//     if raw1["queueType"] == 'RANKED_SOLO_5x5':
+//         tier = raw1["tier"]
+//         division = raw1["rank"]
+//         lp = raw1["leaguePoints"]
+//     else:
+//         tier = raw2["tier"]
+//         division = raw2["rank"]
+//         lp = raw2["leaguePoints"]
+
+//     return name + " is **" + str(tier) + "** **" + str(division) + "**\n*" + str(lp) + "* *LP*"
+
+if (process.env.ENVIRONMENT !== 'DEV') {
+    //catch all other requests and send back frontend
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../lancesite-react/build/index.html'));
+    });
+}
 
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);

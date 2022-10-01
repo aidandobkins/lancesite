@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {} from './styles/LosersQueue';
-import {CardContainer, ContentText} from '../components/styles/ContentCard';
+import {CardContainer, ContentText, ContentSubtitle, Title} from '../components/styles/ContentCard';
+
+const getLeagueRank = () => {};
 
 const LosersQueue = () => {
     return (
-        <CardContainer>
-            <ContentText>This is a card with something cool on it</ContentText>
-        </CardContainer>
+        <>
+            <Title>Cameron's Rank</Title>
+        </>
     );
 };
 

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, Component} from 'react';
 import {LancePhoto} from './styles/Lance';
-import {CardContainer, ContentText} from '../components/styles/ContentCard';
+import {CardContainer, ContentSubtitle, Title} from '../components/styles/ContentCard';
 
 const Lance = () => {
     const [lancePhoto, setLancePhoto] = useState({src: ''});
@@ -20,10 +20,10 @@ const Lance = () => {
     }, []);
 
     return (
-        <CardContainer>
-            <ContentText>Lance of the Day</ContentText>
-            {lancePhoto.src && <LancePhoto src={lancePhoto.src}></LancePhoto>}
-        </CardContainer>
+        <>
+            <Title>Lance of the Day</Title>
+            <CardContainer>{lancePhoto.src && <LancePhoto src={lancePhoto.src}></LancePhoto>}</CardContainer>
+        </>
     );
 };
 

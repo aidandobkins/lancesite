@@ -1,23 +1,21 @@
 import styled from 'styled-components';
 
 export const NavContainer = styled.div<{isActive: boolean}>`
-    display: flex;
+    display: ${(props) => (props.isActive ? 'flex' : 'none')};
     flex-direction: column;
     justify-content: start;
-    height: ${(props) => (props.isActive ? 'calc(100vh - 16px)' : '0px')};
-    width: ${(props) => (props.isActive ? '' : '0px')};
-    overflow: hidden;
+    height: 100%;
+    //overflow: hidden;
     background-color: #212129;
-    position: sticky;
-    position: -webkit-sticky; /* Safari */
+    position: fixed;
     padding-top: 16px;
     top: 40px; //makes it stick to the top of the page
-    position: absolute;
     left: 0px;
+    z-index: 1;
 
     //desktop view
     @media (min-width: 801px) {
-        position: relative;
+        display: flex;
         height: calc(100vh - 32px);
         width: auto;
         border-radius: 32px;

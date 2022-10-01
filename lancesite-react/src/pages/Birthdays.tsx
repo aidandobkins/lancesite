@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {BirthdayList, BirthdayListItem} from './styles/Birthdays';
-import {CardContainer, ContentText} from '../components/styles/ContentCard';
+import {CardContainer, ContentSubtitle, Title} from '../components/styles/ContentCard';
 
 const Birthdays = () => {
     const [birthdays, setBirthdays] = useState([]);
@@ -20,13 +20,16 @@ const Birthdays = () => {
     }, []);
 
     return (
-        <CardContainer>
-            <BirthdayList>
-                {birthdays.map((birthday, id) => (
-                    <BirthdayListItem key={id}>{birthday}</BirthdayListItem>
-                ))}
-            </BirthdayList>
-        </CardContainer>
+        <>
+            <Title>Birthdays</Title>
+            <CardContainer>
+                <BirthdayList>
+                    {birthdays.map((birthday, id) => (
+                        <BirthdayListItem key={id}>{birthday}</BirthdayListItem>
+                    ))}
+                </BirthdayList>
+            </CardContainer>
+        </>
     );
 };
 

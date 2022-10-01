@@ -7,12 +7,18 @@ export const PageContainer = styled.div`
     justify-content: center;
 `;
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled.div<{NavIsActive: boolean}>`
+    opacity: ${(props) => (props.NavIsActive ? '30%' : '100%')};
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-content: flex-start;
     margin: 16px auto;
+
+    //desktop view
+    @media (min-width: 801px) {
+        padding-left: 276px;
+    }
 `;
 
 export const NavToggle = styled.button`
@@ -40,6 +46,7 @@ export const TopBar = styled.div`
     position: -webkit-sticky; /* Safari */
     top: 0px; //makes it stick to the top of the page
     overflow: hidden;
+    z-index: 100;
 
     //desktop view
     @media (min-width: 801px) {
