@@ -26,6 +26,7 @@ export const ContentSubtitle = styled.p`
 export const Title = styled.h1`
     font-size: 48px;
     color: #00c1ff;
+    padding: 8px;
     margin: 8px auto;
     text-align: center;
 `;
