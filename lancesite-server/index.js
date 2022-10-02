@@ -103,7 +103,7 @@ app.post('/api/getLeagueRank', jsonParser, (req, res) => {
                 .then((ranks) => {
                     for (let i = 0; i < ranks.length; i++) {
                         if (ranks[i].queueType === 'RANKED_SOLO_5x5') {
-                            res.status(200).send(ranks[i].tier + ' ' + ranks[i].rank);
+                            res.status(200).send(ranks[i]);
                         }
                     }
                 })

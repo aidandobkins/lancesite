@@ -3,7 +3,8 @@ import {} from './styles/LosersQueue';
 import {CardContainer, ContentText, ContentSubtitle, Title} from '../components/styles/ContentCard';
 
 const LosersQueue = () => {
-    const [rank, setRank] = useState('');
+    const [rankText, setRankText] = useState('');
+    const [winLossText, setWinLossText] = useState('');
     const [loading, setLoading] = useState(false);
 
     const getLeagueRank = async (name: string) => {
@@ -13,15 +14,22 @@ const LosersQueue = () => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({name}),
         });
-        const rankString = await rankResponse.text();
+        const ranks = await rankResponse.json();
+
+        let printRank = ranks.tier;
+        if (ranks.tier !== 'CHALLENGER' && ranks.tier !== 'GRANDMASTER' && ranks.tier !== 'MASTER') {
+            printRank = printRank + ' ' + ranks.rank;
+        }
+        printRank = printRank + ' ' + ranks.leaguePoints + ' LP';
+        setWinLossText(ranks.wins + ' Wins & ' + ranks.losses + ' Losses');
 
         setLoading(false);
-        return rankString;
+        return printRank;
     };
 
     useEffect(() => {
         (async () => {
-            setRank(await getLeagueRank('Bellow'));
+            setRankText(await getLeagueRank('Bellow'));
         })();
     }, []);
 
@@ -31,7 +39,12 @@ const LosersQueue = () => {
             <CardContainer>
                 <>
                     {loading && <ContentText>Loading...</ContentText>}
-                    {!loading && <ContentSubtitle>{rank}</ContentSubtitle>}
+                    {!loading && (
+                        <>
+                            <ContentSubtitle>{rankText}</ContentSubtitle>
+                            <ContentText>{winLossText}</ContentText>
+                        </>
+                    )}
                 </>
             </CardContainer>
         </>
