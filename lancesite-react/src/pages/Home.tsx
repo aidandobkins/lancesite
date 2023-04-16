@@ -7,7 +7,7 @@ const Home = () => {
         <>
             <Title>Welcome to the Lance Website</Title>
             <CardContainer>
-                <ContentText>Note: Laff Joke, Dogecoin, Balance, and Music Bot are soon to come.</ContentText>
+                <ContentText>Note: Laff Joke, Balance, and Music Bot are soon to come.</ContentText>
             </CardContainer>
             <CardContainer>
                 <Lance />

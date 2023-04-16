@@ -31,6 +31,7 @@ export const NavLink = styled.a<{color?: string}>`
     font-size: 18px;
     white-space: nowrap;
     width: 220px;
+    text-decoration: none;
 
     &:hover {
         cursor: pointer;

@@ -9,6 +9,7 @@ import Birthdays from './pages/Birthdays';
 import Dogecoin from './pages/Dogecoin';
 import Balance from './pages/Balance';
 import MusicBot from './pages/MusicBot';
+import SFTPInfo from './pages/SFTPInfo';
 import Layout from './Layout';
 
 const Switcher: React.FC = () => {
@@ -24,6 +25,7 @@ const Switcher: React.FC = () => {
                 <Route path="/dogecoin" element={<Dogecoin />} />
                 <Route path="/balance" element={<Balance />} />
                 <Route path="/music-bot" element={<MusicBot />} />
+                <Route path="/sftp" element={<SFTPInfo />} />
 
                 {/* redirects to home if none of the links were correct */}
                 <Route path="*" element={<Navigate to="/" />} />

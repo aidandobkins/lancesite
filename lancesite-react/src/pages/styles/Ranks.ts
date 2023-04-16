@@ -17,6 +17,7 @@ export const RankInput = styled.input`
     border: none;
     height: 24px;
     padding: 8px;
+    text-align: center;
 `;
 
 export const RankLabel = styled.label`
@@ -32,4 +33,16 @@ export const RankSubmit = styled.button`
     border-radius: 8px;
     height: 40px;
     font-size: 18px;
+
+    &:hover {
+        transition: 0.2s;
+        cursor: pointer;
+        filter: brightness(80%);
+    }
+`;
+
+export const RankImage = styled.img`
+    width: 150px;
+    margin: 0px auto;
+    color: white;
 `;
