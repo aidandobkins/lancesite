@@ -21,7 +21,7 @@ const SFTPInfo = () => {
                     </i>{' '}
                     as the IP Address/Hostname, and{' '}
                     <i>
-                        <b>53</b>
+                        <b>17927</b>
                     </i>{' '}
                     as the port number (NOT 21 or 22). <br />
                     Enter the username and password that Aidan gave you.
