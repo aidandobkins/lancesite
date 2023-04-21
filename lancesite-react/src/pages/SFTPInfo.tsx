@@ -10,7 +10,11 @@ const SFTPInfo = () => {
                     How to connect to Aidan's SFTP Server to Transfer files <br />
                     Use whatever SFTP Client you want, Filezilla is what I use, <br />
                     but there are some online ones like{' '}
-                    <a style={{color: '#00c1ff'}} target="_blank" href="https://www.filestash.app/sftp-browser.html">
+                    <a style={{color: '#00c1ff'}} target="_blank" rel="noreferrer" href="https://www.filestash.app/sftp-browser.html">
+                        this
+                    </a>
+                    and{' '}
+                    <a style={{color: '#00c1ff'}} target="_blank" rel="noreferrer" href="https://ftpweb.net/">
                         this
                     </a>
                 </ContentText>
